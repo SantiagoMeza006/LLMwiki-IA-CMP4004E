@@ -1,0 +1,11 @@
+# Copyrighted course material (textbook, papers, instructor slides) stays local.
+# See raw/SOURCES.md for the list; regenerate extracted/ with tools/extract_sources.py.
+raw/*
+!raw/SOURCES.md
+!raw/A^star vs Dijkstra - Shortest Path.pdf
+extracted/
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
