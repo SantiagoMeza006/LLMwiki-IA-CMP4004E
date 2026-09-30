@@ -2,8 +2,8 @@
 title: Alpha–Beta Pruning
 type: algorithm
 unit: games-csp
-sources: [slides-02-problem-solving]
-updated: 2026-09-29
+sources: [slides-02-problem-solving, rn-ch06-games]
+updated: 2026-09-30
 ---
 
 # Alpha–Beta Pruning 🎯
@@ -65,7 +65,12 @@ Full walkthrough: [minimax-alpha-beta-trace](../exercises/minimax-alpha-beta-tra
 | Time, random ordering | ≈ O(b^(3m/4)) |
 | Time, worst ordering | O(b^m) (no pruning) |
 
-**Move ordering matters**: examine likely-best moves first (killer moves, iterative deepening, transposition tables — R&N Ch 6).
+**Move ordering matters** (R&N §6.2.4): with perfect ordering the effective branching factor is √b — for chess about **6 instead of 35**. How to get close:
+- **Static ordering:** captures first, then threats, then forward moves, then backward moves → within ~2× of the best case.
+- **Dynamic ordering / killer move heuristic:** try first the moves that were best before — from the previous move or from a shallower **iterative deepening** pass.
+- **Transposition table:** cache values of positions reached by different move orders (transpositions), like the `reached` table in graph search — in chess it roughly **doubles** the reachable depth.
+
+Even so, full-depth alpha–beta is impossible in chess → cut off with an evaluation function: [heuristic-alpha-beta](heuristic-alpha-beta.md).
 
 ## Common mistakes
 - Thinking pruning can change the answer.

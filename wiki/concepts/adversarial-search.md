@@ -2,13 +2,13 @@
 title: Adversarial Search and Games
 type: concept
 unit: games-csp
-sources: [slides-02-problem-solving]
-updated: 2026-09-29
+sources: [slides-02-problem-solving, rn-ch06-games]
+updated: 2026-09-30
 ---
 
 # Adversarial Search and Games
 
-(Source: slides-02 s.17–22, which reproduce R&N Ch 6 figures. Ch 6 is not in our PDF excerpt.)
+(Sources: [slides-02](../sources/slides-02-problem-solving.md) s.17–22 and [R&N Ch 6](../sources/rn-ch06-games.md).)
 
 ## Setting 🎯
 - Until now: **one** agent searching in a cooperative/neutral environment. In games: **two or more agents with opposing objectives**.
@@ -26,10 +26,21 @@ updated: 2026-09-29
 
 The **game tree** alternates MAX levels (△) and MIN levels (▽); one **ply** = one move by one player.
 
+"Zero-sum" is traditional; **constant-sum** would be more accurate (chess outcomes sum to 1: 1 + 0 or ½ + ½) (R&N §6.1). "Perfect information" = fully observable.
+
 ## Algorithms
 - [Minimax](../algorithms/minimax.md) — exact optimal decision, explores the whole tree: O(b^m) time.
 - [Alpha–beta pruning](../algorithms/alpha-beta-pruning.md) — same decision, prunes branches that can't matter; best case O(b^(m/2)).
-- Worked example on R&N Fig 6.2: [minimax-alpha-beta-trace](../exercises/minimax-alpha-beta-trace.md).
+- [Heuristic alpha–beta](../algorithms/heuristic-alpha-beta.md) — cut off at a depth, apply an evaluation function (Type A strategy).
+- [Monte Carlo tree search](../algorithms/monte-carlo-tree-search.md) — average many playouts, UCB1 selection (Type B, Go).
+- [Expectiminimax](../algorithms/expectiminimax.md) — games with dice (chance nodes).
+- Side by side: [game-algorithms-comparison](../comparisons/game-algorithms-comparison.md). Worked: [minimax-alpha-beta-trace](../exercises/minimax-alpha-beta-trace.md), [games-traces](../exercises/games-traces.md).
+
+## Beyond the basic setting
+(R&N §6.6–6.7)
+- **Partially observable games** (Kriegspiel, poker, bridge): reason about **belief states** of both players; a common approximation averages over possible deals/configurations ("averaging over clairvoyance"), which fails to value information-gathering and bluffing.
+- Programs beat champions at chess, checkers, Othello, Go and poker; humans kept an edge longer in bridge and Kriegspiel.
+- **Limitations:** evaluation errors compound, search considers one move at a time, and good players reason about *which* computations are worth doing (**metareasoning**).
 
 ## How games relate to the environment taxonomy
 Chess: fully observable, **multiagent (competitive)**, deterministic, sequential, static (semidynamic with a clock), discrete. See [task-environment-properties](task-environment-properties.md).

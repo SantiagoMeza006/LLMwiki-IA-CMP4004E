@@ -33,7 +33,7 @@ updated: 2026-09-29
 | 25 | BACKTRACKING-SEARCH pseudocode (R&N Fig 5.5). | [backtracking-search-csp](../algorithms/backtracking-search-csp.md) |
 
 ## Where it fits
-Units **search** and **games-csp**. Textbook companion: [R&N Chapter 3](rn-ch03-search.md) (the PDF excerpt does **not** include Ch 5–6; games/CSP pages rely on the slides plus standard R&N content reproduced in the slide figures).
+Units **search** and **games-csp**. Textbook companions: [R&N Ch 3](rn-ch03-search.md) (search), [R&N Ch 5](rn-ch05-csp.md) (CSPs), [R&N Ch 6](rn-ch06-games.md) (games) — the slide figures (Figs 5.5, 6.2, 6.3, 6.5) come from these chapters.
 
 > ⚠️ **Naming (slide 12):** the slide titles greedy search "Best-First Search". In R&N, *best-first search* is the **generic family** (expand the node with minimum f(n)); *greedy best-first* is the member with f(n)=h(n). Know both usages.
 >

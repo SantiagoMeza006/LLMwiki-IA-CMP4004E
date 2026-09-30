@@ -2,8 +2,8 @@
 title: Prolog (language essentials)
 type: concept
 unit: logic
-sources: [slides-xx-prolog, slides-01-intro-to-ai]
-updated: 2026-09-29
+sources: [slides-xx-prolog, slides-01-intro-to-ai, rn-ch09-fol-inference]
+updated: 2026-09-30
 ---
 
 # Prolog
@@ -61,6 +61,21 @@ mylen([_|T], N) :- mylen(T, N0), N is N0 + 1.
 ## Negation as failure and the cut 🎯
 - `\+ Goal` succeeds when Prolog **fails to prove** Goal. Equals logical negation only under the **closed-world assumption** (whatever isn't derivable is false). **Bind variables before negating**: `\+ parent(X, ana)` is `false` (some X exists), while `X = sofia, \+ parent(X, _)` works.
 - `!` (cut) commits to choices made so far in the clause: no retrying goals to its left, no later clauses of this predicate. Faster but destroys the declarative reading. Bug: `max(X,Y,X) :- X >= Y, !.  max(_,Y,Y).` makes `max(5,3,3)` **true**. Fix: `max(X,Y,M) :- X >= Y, !, M = X.` or better `( X >= Y -> M = X ; M = Y )`.
+
+## Prolog vs pure first-order logic (R&N §9.4) 🎯
+Prolog programs are sets of **definite clauses**, run by **depth-first backward chaining** with clauses tried in written order. Where it departs from logic:
+| Prolog | Pure FOL |
+|---|---|
+| **Database semantics**: unique-names + **closed-world** assumption → negation as failure; "there is no way to assert that a sentence is false" | standard semantics: unmentioned facts are *unknown* |
+| Built-in arithmetic: `X is 4+3` succeeds (X = 7); `5 is X+Y` **fails/errors** — no equation solving | arithmetic via axioms (Peano) |
+| Side-effect predicates (I/O, `assert/retract`) | none |
+| **No occur check** in unification (fast, occasionally unsound) | occur check |
+| DFS with **no loop check** → programs that look like valid logic may not terminate | complete proof procedures |
+
+- Course facts `course(cs,101). course(cs,102). course(cs,106). course(ee,101).` mean **exactly four** courses in Prolog (unique names + closed world); in FOL they mean "between one and infinitely many". Capturing Prolog's reading in FOL needs the **completion** of the predicate (and of equality).
+- **Tabling** (memoisation) makes backward chaining complete for Datalog and removes redundant work: finding a path A1 → J4 in R&N Fig 9.8(b) takes **877 inferences** with plain Prolog vs **62** with forward chaining (dynamic programming). That's what `:- table path/2.` does.
+- **Constraint logic programming (CLP):** variables can be *constrained* instead of bound. `triangle(X,Y,Z) :- X>0, Y>0, Z>0, X+Y>Z, Y+Z>X, X+Z>Y.` — plain Prolog answers `triangle(3,4,5)` but fails on `triangle(3,4,Z)` (can't compare unbound Z); CLP answers **1 < Z < 7**. SWI's `library(clpfd)` (slides-XX s.9) is CLP over finite domains.
+- R&N on uses: rapid prototyping, symbol manipulation, compilers, NL parsing, expert systems (legal, medical, financial).
 
 ## Classic mistakes (s.28)
 Missing period · `=` instead of `is` · singleton-variable warnings (use `_`) · left recursion · uppercase where an atom was meant (`parent(Hector, ana)` = "some Hector") · `\+` on unbound variables. Debug with `trace/0` (ports: **Call, Exit, Redo, Fail**).

@@ -2,8 +2,8 @@
 title: SLD Resolution (how Prolog executes a query)
 type: algorithm
 unit: logic
-sources: [slides-xx-prolog]
-updated: 2026-09-29
+sources: [slides-xx-prolog, rn-ch09-fol-inference]
+updated: 2026-09-30
 ---
 
 # SLD Resolution — Prolog's Execution Strategy 🎯
@@ -36,6 +36,8 @@ path(X, Z) :- link(X, Z).
 ```
 > **SLD resolution is complete; Prolog's search rule (depth-first) is not.**
 Fix: `:- table path/2.` (tabling/memoisation) — or put the recursive call after a goal that consumes input (`path(X,Z) :- link(X,Y), path(Y,Z).`).
+
+R&N §9.4.3 on the same example: Prolog is **incomplete as a theorem prover even for Datalog**, while forward chaining halts after inferring path(a,b), path(b,c), path(a,c). Depth-first backward chaining also **repeats work**: 877 inferences for a path in R&N Fig 9.8(b) vs 62 with forward chaining. **Tabled logic programming** = goal-directed backward chaining + the caching of dynamic programming; complete for Datalog.
 
 ## Relation to search theory
 - Frontier = stack of pending goals/choicepoints → O(depth) memory, like DFS.

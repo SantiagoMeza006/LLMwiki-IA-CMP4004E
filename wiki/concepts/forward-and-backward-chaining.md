@@ -2,8 +2,8 @@
 title: Forward and Backward Chaining
 type: concept
 unit: logic
-sources: [slides-xx-prolog]
-updated: 2026-09-29
+sources: [slides-xx-prolog, rn-ch07-logical-agents, rn-ch09-fol-inference]
+updated: 2026-09-30
 ---
 
 # Forward and Backward Chaining
@@ -38,6 +38,32 @@ criminal(west)
 └── hostile(nono)  → enemy(nono, america) ✔
 ```
 `?- criminal(west).` → `true.`
+
+## Propositional forward chaining — PL-FC-ENTAILS? (R&N Fig 7.15)
+```
+function PL-FC-ENTAILS?(KB, q) returns true or false
+    count ← table: count[c] = number of symbols in clause c's premise
+    inferred ← table: inferred[s] = false for all symbols
+    queue ← symbols known to be true in KB
+    while queue is not empty:
+        p ← POP(queue)
+        if p = q: return true
+        if inferred[p] = false:
+            inferred[p] ← true
+            for each clause c in KB where p is in c.PREMISE:
+                decrement count[c]
+                if count[c] = 0: add c.CONCLUSION to queue
+    return false
+```
+- **Sound** (each step is Modus Ponens), **complete** for Horn KBs (the final `inferred` table is a model of the KB, so every entailed atom is in it), **linear time**.
+- Example (R&N Fig 7.16): `P ⇒ Q`, `L ∧ M ⇒ P`, `B ∧ L ⇒ M`, `A ∧ P ⇒ L`, `A ∧ B ⇒ L`, facts A, B. Order: A, B → L (A∧B) → M (B∧L) → P (L∧M) → Q (P). Verified in code: [logic-inference-traces](../exercises/logic-inference-traces.md).
+- Backward chaining on the same KB works down the AND–OR graph from Q to A and B — essentially AND-OR-GRAPH-SEARCH ([nondeterministic search](nondeterministic-and-partially-observable-search.md)); often **much less than linear** because it touches only relevant facts.
+
+## First-order versions (R&N §9.3–9.4)
+- **First-order definite clauses:** exactly one positive literal; no ∃ (Skolemize first); variables implicitly ∀. **Datalog** = definite clauses without function symbols (the crime KB is Datalog).
+- **FOL-FC-ASK:** each iteration fires every rule whose premises unify with known facts (via [Generalized Modus Ponens](first-order-inference.md#lifting-generalized-modus-ponens-gmp-)). Crime KB: iteration 1 adds `Sells(West, M1, Nono)`, `Weapon(M1)`, `Hostile(Nono)`; iteration 2 adds `Criminal(West)`; then a **fixed point**. Sound and complete for definite clauses; for Datalog it terminates in polynomial time (≤ p·n^k facts). With function symbols it may run forever (NatNum(S(S(…)))) — semidecidable.
+- Efficiency: **conjunct ordering** (like MRV), matching is NP-hard in general (a CSP is one big definite clause), **incremental** forward chaining, the **Rete** algorithm (production systems like XCON, cognitive architectures ACT, SOAR), **magic sets** for deductive databases.
+- **FOL-BC-ASK:** a **generator** of substitutions; FOL-BC-OR (try every rule whose head unifies with the goal) and FOL-BC-AND (prove every conjunct, threading θ) — an AND/OR search, depth-first → linear space, but repeated states and incompleteness.
 
 ## Caveats
 - Backward chaining is a **depth-first search** — inherits DFS's incompleteness in infinite/cyclic spaces (left recursion loops). See [sld-resolution](../algorithms/sld-resolution.md).

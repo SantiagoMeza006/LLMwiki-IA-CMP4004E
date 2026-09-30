@@ -4,12 +4,12 @@ type: source
 unit: intro
 raw: "raw/Russell, S. J. (2022). Artificial intelligence. Pearson.pdf"
 sources: [rn-ch01-introduction]
-updated: 2026-09-29
+updated: 2026-09-30
 ---
 
 # Russell & Norvig, *AIMA* 4th ed. (Global), Chapter 1 — Introduction
 
-Raw: `raw/Russell, S. J. (2022). Artificial intelligence. Pearson.pdf` — **an excerpt of 117 PDF pages**: front matter + Chapters 1, 2 and 3 up to the start of §3.6.1. Text dump: `extracted/Russell, S. J. (2022)...txt`.
+Raw: `raw/Russell, S. J. (2022). Artificial intelligence. Pearson.pdf` — since 2026-09-30 the **full book** (1167 PDF pages; PDF page ≈ book page + 2). Ingested so far: Ch 1–9 (up to what the slides cover). Text dump: `extracted/Russell, S. J. (2022)...txt`.
 
 ## Key content
 - **§1.1 Four approaches** (human vs rational × thinking vs acting) → [what-is-ai](../concepts/what-is-ai.md):

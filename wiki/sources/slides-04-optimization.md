@@ -23,7 +23,7 @@ updated: 2026-09-29
 | 16–19 | 🎯 **Artificial Bee Colony** (Karaboga 2007): employed, onlooker, scout bees; employed + onlookers exploit, scouts explore; parameters: number of food sources (= employed = onlooker bees), `limit`, max cycles MCN; candidate `v_ij = x_ij + φ_ij·(x_ij − x_kj)`. Loop: initialise; repeat {employed → onlookers → scouts} until done. | [artificial-bee-colony](../algorithms/artificial-bee-colony.md) |
 
 ## Where it fits
-Unit **optimization**. Primary readings: [Holland 1992](holland-1992-genetic-algorithms.md) and [Dorigo et al. 1996](dorigo-1996-ant-system.md). The R&N excerpt we have stops at Ch 3, so local search (R&N Ch 4: hill climbing, simulated annealing) is only mentioned for context.
+Unit **optimization**. Primary readings: [Holland 1992](holland-1992-genetic-algorithms.md) and [Dorigo et al. 1996](dorigo-1996-ant-system.md). Textbook backbone: [R&N Ch 4 §4.1–4.2](rn-ch04-complex-environments.md) — [local search](../concepts/local-search.md), [hill climbing](../algorithms/hill-climbing.md), [simulated annealing](../algorithms/simulated-annealing.md), local beam search and R&N's view of [genetic algorithms](../algorithms/genetic-algorithms.md). PSO, ACO and ABC are not in R&N; the papers and slides are the only sources for them.
 
 > ⚠️ **Two conventions for ρ (slide 14 vs Dorigo 1996):** the slide writes `τ ← (1−ρ)τ + ΣΔτ` with **ρ = evaporation rate**. The original paper writes `τ(t+n) = ρ·τ(t) + Δτ` with **ρ = trail persistence** (so 1−ρ is evaporation). Same algorithm, opposite meaning of ρ. See [discrepancies](../discrepancies.md).
 >

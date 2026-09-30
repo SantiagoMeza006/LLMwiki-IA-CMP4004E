@@ -2,8 +2,8 @@
 title: Evolutionary Computation
 type: concept
 unit: optimization
-sources: [slides-04-optimization, holland-1992-genetic-algorithms]
-updated: 2026-09-29
+sources: [slides-04-optimization, holland-1992-genetic-algorithms, rn-ch04-complex-environments]
+updated: 2026-09-30
 ---
 
 # Evolutionary Computation
@@ -17,6 +17,8 @@ Arose from the need to solve (combinatorial) optimization problems with the prin
 | 1970 | **Ingo Rechenberg & Hans-Paul Schwefel** | **Evolution strategies** for continuous parameter optimization. |
 | mid-1960s / **1975** | **John H. Holland** | **Genetic algorithms**, a general adaptive model (book 1975; 1992 Sci. Am. article). Emphasised **crossover (mating)** over mutation. |
 | late 50s/early 60s | Friedberg (machine evolution), Bremermann | Early mutation-only attempts did poorly (R&N §1.3.3; Holland 1992). |
+
+R&N §4.1.4 names three branches by **representation**: **genetic algorithms** (strings over a finite alphabet), **evolution strategies** (real-valued vectors — Rechenberg & Schwefel), **genetic programming** (individuals are programs). All are "variants of stochastic beam search" motivated by natural selection. R&N's "Evolution and Search" box adds Darwin (1859) / Wallace (1858), Mendel (1866), Watson & Crick (1953), and the **Baldwin effect** (learning within a lifetime smooths the fitness landscape and speeds up evolution; Lamarck's inheritance of acquired traits was wrong).
 
 ## Biological vocabulary → algorithm
 | Biology | Algorithm |

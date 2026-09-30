@@ -2,8 +2,8 @@
 title: Practice — Optimization & Bio-Inspired Algorithms
 type: practice
 unit: optimization
-sources: [slides-04-optimization, holland-1992-genetic-algorithms, dorigo-1996-ant-system]
-updated: 2026-09-29
+sources: [slides-04-optimization, holland-1992-genetic-algorithms, dorigo-1996-ant-system, rn-ch04-complex-environments]
+updated: 2026-09-30
 ---
 
 # Practice — Optimization & Bio-Inspired Algorithms
@@ -44,3 +44,29 @@ updated: 2026-09-29
     <details><summary>answer</summary>Combinatorial/graph problems like TSP, routing, scheduling: ants construct discrete solutions edge by edge. PSO naturally handles continuous spaces.</details>
 18. Holland's turbine example: what's the lesson about GA limitations?
     <details><summary>answer</summary>GAs locate promising regions of huge landscapes well, but fine-tuning a few variables is better done with conventional local methods — combine them.</details>
+
+## Local search (R&N Ch 4)
+19. What does local search give up, and what does it gain, compared with the systematic search of Ch 3?
+    <details><summary>answer</summary>Gives up systematicity (may miss solutions; no path kept). Gains tiny memory (often O(1)) and the ability to handle huge/infinite state spaces and pure optimization problems.</details>
+20. Name three landscape features that stop hill climbing and explain the difference between a flat local maximum and a shoulder.
+    <details><summary>answer</summary>Local maxima, ridges, plateaus. A flat local maximum has no uphill exit; a shoulder is flat but leads upward later (sideways moves can cross it).</details>
+21. 8-queens with steepest-ascent hill climbing: success rate, and with ≤ 100 sideways moves?
+    <details><summary>answer</summary>14% (stuck 86%); 94% with sideways moves.</details>
+22. Why is random-restart hill climbing "complete with probability 1"? Expected restarts if one run succeeds with probability p?
+    <details><summary>answer</summary>Eventually a random initial state is itself a goal (or leads to one); expected runs = 1/p.</details>
+23. In simulated annealing, a move worsens the objective by 3 at T = 3. Acceptance probability? What happens as T → 0?
+    <details><summary>answer</summary>e^(−3/3) = e^(−1) ≈ 0.368. As T → 0, bad moves are essentially never accepted → hill climbing.</details>
+24. Local beam search with k states vs k random restarts?
+    <details><summary>answer</summary>Beam search pools successors and keeps the k best overall (information sharing); restarts are independent. Beam can lose diversity → stochastic beam search.</details>
+25. According to R&N, what is a GA in terms of other local search methods? What is the mixing number?
+    <details><summary>answer</summary>A stochastic beam search with crossover (recombination). Mixing number ρ = number of parents per offspring (ρ = 1 is stochastic beam search).</details>
+26. When does crossover give *no* advantage?
+    <details><summary>answer</summary>When the encoding has no meaningful building blocks/schemas — e.g. if gene positions were randomly permuted.</details>
+27. In the 8-queens GA, what is the fitness function and its maximum?
+    <details><summary>answer</summary>Number of non-attacking pairs of queens; 8·7/2 = 28 for a solution.</details>
+28. What is elitism and what does it guarantee?
+    <details><summary>answer</summary>Copying the best parents into the next generation; the best fitness never decreases.</details>
+29. Gradient ascent update and the role of α? What does Newton–Raphson add?
+    <details><summary>answer</summary>x ← x + α∇f(x); α = step size (too small = slow, too big = overshoot). Newton uses the Hessian: x ← x − H⁻¹∇f(x), jumping to the optimum of a local quadratic fit.</details>
+30. What's special about convex optimization / linear programming?
+    <details><summary>answer</summary>No local optima other than the global one; LP is solvable in polynomial time.</details>

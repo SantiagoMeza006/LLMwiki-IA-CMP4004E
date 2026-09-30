@@ -2,8 +2,8 @@
 title: Genetic Algorithms (GA)
 type: algorithm
 unit: optimization
-sources: [slides-04-optimization, holland-1992-genetic-algorithms]
-updated: 2026-09-29
+sources: [slides-04-optimization, holland-1992-genetic-algorithms, rn-ch04-complex-environments]
+updated: 2026-09-30
 ---
 
 # Genetic Algorithms 🎯
@@ -43,6 +43,35 @@ In Holland's version the offspring **replace the lowest-fitness strings**, keepi
 - Above-average regions receive exponentially more samples over generations.
 - **Compact building blocks** (defining bits close together) survive crossover best → they propagate at a rate proportional to their average fitness.
 - Crossover tests building blocks in **new contexts** → balances [exploration vs exploitation](../concepts/exploration-vs-exploitation.md); handles nonlinear interactions between bits.
+
+## The textbook view (R&N §4.1.4)
+R&N treat GAs as a **stochastic beam search with crossover** (see [local-search](../concepts/local-search.md)). Design choices of any evolutionary algorithm:
+- **Population size**; **representation** — GA: strings over a finite alphabet; **evolution strategies**: real-valued vectors; **genetic programming**: programs.
+- **Mixing number ρ** — parents per offspring (ρ = 2 usual; ρ = 1 = stochastic beam search, i.e. asexual).
+- **Selection** — fitness-proportional, or tournament (pick n at random, keep the ρ fittest).
+- **Recombination** — crossover point(s). **Mutation rate** — per-bit flip probability.
+- **Next generation** — only offspring, or keep the best parents (**elitism**: fitness never decreases); **culling** (discard below a threshold) can speed things up.
+
+**8-queens GA (R&N Fig 4.6):** a state is an 8-digit string (digit c = row of the queen in column c); fitness = number of **non-attacking pairs** (28 for a solution). Population 24748552 (24), 32752411 (23), 24415124 (20), 32543213 (11) → selection probabilities 31%, 29%, 26%, 14%; crossing `327|52411` with `247|48552` gives `32748552` (verified in code). Mutation = move a random queen within its column.
+- R&N's schema example: `246*****` = first three queens in rows 2, 4, 6. If a schema's instances are above-average, its instance count grows — Holland's result in textbook form.
+- **Crossover only helps if schemas correspond to meaningful components**; if the gene positions were randomly permuted, crossover would give no advantage → careful representation engineering.
+- GA pseudocode (R&N Fig 4.8):
+  ```
+  function GENETIC-ALGORITHM(population, fitness) returns an individual
+      repeat
+          weights ← WEIGHTED-BY(population, fitness)
+          population2 ← empty list
+          for i = 1 to SIZE(population):
+              parent1, parent2 ← WEIGHTED-RANDOM-CHOICES(population, weights, 2)
+              child ← REPRODUCE(parent1, parent2)
+              if (small random probability): child ← MUTATE(child)
+              add child to population2
+          population ← population2
+      until some individual is fit enough, or enough time has elapsed
+      return the best individual in population
+  ```
+- Early on, a diverse population makes crossover take **large steps** (like high-temperature [simulated annealing](simulated-annealing.md)); later steps get smaller.
+- R&N's caveat: it's not clear how much of GAs' appeal comes from superior performance vs the appealing metaphor; they shine on complex structured problems (circuit layout, job-shop scheduling, neural architecture search).
 
 ## Properties
 - Stochastic, population-based, no gradient needed; no optimality guarantee.

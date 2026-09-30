@@ -2,8 +2,8 @@
 title: Minimax
 type: algorithm
 unit: games-csp
-sources: [slides-02-problem-solving]
-updated: 2026-09-29
+sources: [slides-02-problem-solving, rn-ch06-games]
+updated: 2026-09-30
 ---
 
 # Minimax 🎯
@@ -59,6 +59,12 @@ B = min(3,12,8) = 3; C = min(2,4,6) = 2; D = min(14,5,2) = 2; A = max(3,2,2) = *
 | Time | **O(b^m)** — explores the complete tree down to terminal nodes |
 | Space | **O(b·m)** (depth-first; O(m) if generating one action at a time) |
 
-Chess: b ≈ 35, m ≈ 80 → infeasible. Fixes: [alpha-beta pruning](alpha-beta-pruning.md); cut off at a depth and use a heuristic **evaluation function** (R&N §6.3).
+Chess: b ≈ 35, m ≈ 80 ply → 35⁸⁰ ≈ 10¹²³ states (R&N §6.2.1) → infeasible. Tic-tac-toe has fewer than 9! = 362,880 terminal nodes; chess has over 10⁴⁰ nodes. Fixes: [alpha-beta pruning](alpha-beta-pruning.md); cut off at a depth and use a heuristic **evaluation function** ([heuristic-alpha-beta](heuristic-alpha-beta.md)); or sample with [MCTS](monte-carlo-tree-search.md).
+
+## Multiplayer games
+(R&N §6.2.2) Replace the single value by a **vector of utilities** ⟨vA, vB, vC⟩; each player picks the child whose vector is best **for itself**, and that vector is backed up. E.g. C choosing between ⟨1, 2, 6⟩ and ⟨4, 2, 3⟩ picks ⟨1, 2, 6⟩. Multiplayer games show **alliances** forming and breaking; in two-player zero-sum games the vector collapses to one number.
+
+## Games of chance
+Add chance nodes and average → [expectiminimax](expectiminimax.md).
 
 Worked: [minimax-alpha-beta-trace](../exercises/minimax-alpha-beta-trace.md). Concept: [adversarial-search](../concepts/adversarial-search.md).

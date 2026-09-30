@@ -9,7 +9,7 @@ updated: 2026-09-29
 
 # Slides XX — Logic Programming with Prolog
 
-31 slides · Raw: `raw/XX_Logic Programming with Prolog.pptx` · Text-heavy, code-rich deck; includes **Prolog Lab 01** assignment. Reading: R&N §7.5 (Horn clauses, chaining) and §9.4 (backward chaining, logic programming) — *not in our PDF excerpt*.
+31 slides · Raw: `raw/XX_Logic Programming with Prolog.pptx` · Text-heavy, code-rich deck; includes **Prolog Lab 01** assignment. Reading: R&N §7.5 (Horn clauses, chaining) and §9.4 (backward chaining, logic programming) — ingested as [rn-ch07](rn-ch07-logical-agents.md) and [rn-ch09](rn-ch09-fol-inference.md) (plus [rn-ch08](rn-ch08-first-order-logic.md) for FOL).
 
 ## What it covers
 
